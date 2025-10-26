@@ -1,0 +1,53 @@
+# TUIasi Racing Dashboard Module
+
+![Dashboard Example](https://placehold.co/600x200?text=Dashboard+OLED+Example)
+
+## Overview
+
+This project is the **Dashboard Module** for the TUIasi Racing Team, designed to run on an ESP32 microcontroller.  
+It provides real-time telemetry, lap timing, and vehicle status display for racing applications.  
+The system integrates multiple hardware components and communication protocols to deliver robust data logging, visualization, and remote monitoring.
+
+---
+
+## Features
+
+- **Real-Time Lap Timing** using GPS gate crossing detection
+- **CAN Bus Data Acquisition** (RPM, Gear, Engine Temp, Battery Voltage, GPS)
+- **OLED Display** for live driver feedback (gear, lap time, temperature, voltage)
+- **NeoPixel LED Strip** for RPM visualization
+- **SD Card Logging** of all telemetry data
+- **WiFi & MQTT** for remote telemetry streaming
+- **Robust Error Handling** for all hardware modules
+
+---
+
+## Hardware Requirements
+
+- **ESP32 Development Board**
+- **RTC DS1307** (Real-Time Clock)
+- **Adafruit SSD1306 OLED Display** (128x64, SPI)
+- **NeoPixel (WS2812) LED Strip** (8 LEDs)
+- **SD Card Module**
+- **CAN Bus Transceiver** (compatible with ESP32)
+- **GPS Module**
+- **Wiring, Connectors, and Power Supply**
+
+---
+
+## Wiring Overview
+
+| Component      | ESP32 Pin      | Notes                |
+| -------------- | -------------- | -------------------- |
+| OLED CS        | GPIO 15        |                      |
+| OLED DC        | GPIO 16        |                      |
+| OLED RST       | GPIO 14        |                      |
+| SD CS          | GPIO 5         |                      |
+| SD SCK         | GPIO 18        |                      |
+| SD MISO        | GPIO 19        |                      |
+| SD MOSI        | GPIO 23        |                      |
+| RTC SDA        | GPIO 21        | I2C                  |
+| RTC SCL        | GPIO 22        | I2C                  |
+| CAN TX         | GPIO 33        |                      |
+| CAN RX         | GPIO 32        |                      |
+| NeoPixel Data  | GPIO 15        |                      |

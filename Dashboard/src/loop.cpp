@@ -1,6 +1,6 @@
 #include "dashboard.h"
 
-Dashboard::Dashboard() : rtcWire(1),
+Dashboard::Dashboard() : //rtcWire(1),
                          spiOled(HSPI),
                          spiSDCard(VSPI),
                          display(Config::SCREEN_WIDTH, Config::SCREEN_HEIGHT, &spiOled, Config::OLED_DC, -1, Config::OLED_CS),
@@ -262,8 +262,8 @@ void Dashboard::processGPSMessage(const twai_message_t &msg)
     // Update current location
     currLocation.timestamp = dateTime + (millis() % 1000) / 1000.0;
     // Use new constants
-    currLocation.lat = Config::GPS_BASE_LAT + (msg.data[2] << 16 | msg.data[1] << 8 | msg.data[0]) / Config::GPS_SCALE_FACTOR;
-    currLocation.lon = Config::GPS_BASE_LON + (msg.data[5] << 16 | msg.data[4] << 8 | msg.data[3]) / Config::GPS_SCALE_FACTOR;
+    currLocation.lat = Config::GPS_BASE_LAT + ((msg.data[0] << 16 | msg.data[1] << 8 | msg.data[2])) / Config::GPS_SCALE_FACTOR;
+    currLocation.lon = Config::GPS_BASE_LON + ((msg.data[3] << 16 | msg.data[4] << 8 | msg.data[5])) / Config::GPS_SCALE_FACTOR;
     currLocation.speed = msg.data[6];
 
     // Check if we've moved enough to check for gate crossing
@@ -443,7 +443,7 @@ void Dashboard::publishMQTT()
             if (Config::DEBUG_SERIAL)
                 Serial.println("Attempting MQTT connection...");
             lastMqttAttempt = currentMillis;
-            if (mqttClient.connect("tuiasi-dashboard"))
+            if (mqttClient.connect("canbus/log"))
             {
                 if (Config::DEBUG_SERIAL)
                     Serial.println("MQTT connected");

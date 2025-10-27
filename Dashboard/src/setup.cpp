@@ -22,6 +22,8 @@ bool Dashboard::initialize()
     display.setCursor(2, 38);
     display.print("CAN - done");
 
+    // RTC initialization removed
+
     startWiFi();
 
 
@@ -115,7 +117,7 @@ bool Dashboard::initializeDisplay()
 void Dashboard::startWiFi()
 {
     WiFi.mode(WIFI_STA); // Set station mode
-    WiFi.begin();        // Start connection, do not wait
+    WiFi.begin("Vlad's iPhone 14","coscos27");        // Start connection, do not wait
     if (Config::DEBUG_SERIAL)
         Serial.println("Attempting WiFi connection...");
     syncNTP();
@@ -140,45 +142,45 @@ bool Dashboard::syncNTP()
     // 1. Set the internal time variable
     dateTime = mktime(&timeinfo);
 
-    // 2. Update the external RTC module with the correct time
-    DateTime ntpTime = DateTime(
-        timeinfo.tm_year + 1900,
-        timeinfo.tm_mon + 1,
-        timeinfo.tm_mday,
-        timeinfo.tm_hour,
-        timeinfo.tm_min,
-        timeinfo.tm_sec);
-    rtc.adjust(ntpTime);
+    // 2. RTC update logic removed
 
     if (Config::DEBUG_SERIAL)
-        Serial.println("NTP time synchronized and RTC updated");
+        Serial.println("NTP time synchronized");
     timeIsSynced = true; // Set the global flag
     return true;
 }
 
 void Dashboard::createLogFile()
 {
-    // Get the time from the RTC (which may or may not be NTP-synced)
-    DateTime now = rtc.now();
+    // Use the synced time (dateTime) to get current time components for file name
+    struct tm now_tm;
 
-    // If time hasn't been synced yet, dateTime will be 0.
-    // Set it from the RTC as a fallback.
-    if (!timeIsSynced)
-    {
-        dateTime = now.unixtime();
+    // Convert time_t (dateTime) to struct tm (now_tm)
+    if (!localtime_r(&dateTime, &now_tm)) {
         if (Config::DEBUG_SERIAL)
-            Serial.println("Creating log file with RTC time (NTP not synced).");
+            Serial.println("WARNING: Could not convert time_t to struct tm for log file name. Using default.");
+        // Fallback to default/epoch time if conversion fails (unlikely after successful NTP sync)
+        memset(&now_tm, 0, sizeof(now_tm));
+        now_tm.tm_year = 100; // 2000
+        now_tm.tm_mon = 0;    // Jan
+        now_tm.tm_mday = 1;   // 1
     }
-    else
+    
+    if (timeIsSynced)
     {
         if (Config::DEBUG_SERIAL)
             Serial.println("Creating log file with NTP-synced time.");
     }
+    else
+    {
+        if (Config::DEBUG_SERIAL)
+            Serial.println("Creating log file with un-synced internal time.");
+    }
 
     snprintf(filename, Config::FILENAME_SIZE,
              "/log_%04d-%02d-%02d_%02d-%02d-%02d.txt",
-             now.year(), now.month(), now.day(),
-             now.hour(), now.minute(), now.second());
+             now_tm.tm_year + 1900, now_tm.tm_mon + 1, now_tm.tm_mday,
+             now_tm.tm_hour, now_tm.tm_min, now_tm.tm_sec);
 
     logFile = SD.open(filename, FILE_WRITE);
     if (logFile)

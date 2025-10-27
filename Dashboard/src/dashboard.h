@@ -13,7 +13,7 @@
 #include <Adafruit_SSD1306.h>
 #include <cmath>
 #include <TinyGPS++.h>
-#include <ArduinoOTA.h>
+//#include <ArduinoOTA.h>
 #include <time.h>
 #include <Fonts/FreeSansBold18pt7b.h>
 
@@ -35,7 +35,7 @@ namespace Config
     constexpr uint32_t GPS_CAN_ID = 0x0117;
 
     // Network settings
-    constexpr const char *MQTT_SERVER = "test.mosquitto.org";
+    constexpr const char *MQTT_SERVER = "broker.hivemq.com";
     constexpr const char *NTP_SERVER = "pool.ntp.org";
     constexpr int32_t GMT_OFFSET_SEC = 7200; // România summer
     constexpr int32_t DAYLIGHT_OFFSET_SEC = 0;
@@ -52,7 +52,7 @@ namespace Config
     // Magic number constants for CAN processing
     constexpr double TEMP_SCALE_FACTOR = 10.0;
     constexpr double VOLT_SCALE_FACTOR = 10.0;
-    constexpr double GPS_SCALE_FACTOR = 10000.0;
+    constexpr double GPS_SCALE_FACTOR = 1000000.0;
     constexpr double GPS_BASE_LAT = 46.0;
     constexpr double GPS_BASE_LON = 26.0;
 
@@ -88,7 +88,7 @@ namespace Config
 
     // Debug flags
     static constexpr bool DEBUG_SERIAL = true;
-    static constexpr bool DEBUG_CAN = false; // Verbose CAN message logging
+    static constexpr bool DEBUG_CAN = true; // Verbose CAN message logging
 }
 
 // CAN configuration (unchanged)
@@ -174,8 +174,8 @@ private:
     void checkCANTimeouts();
 
     // Hardware components
-    RTC_DS1307 rtc;
-    TwoWire rtcWire;
+    //RTC_DS1307 rtc;
+    //TwoWire rtcWire;
     Adafruit_NeoPixel rpmLeds;
     SPIClass spiOled;
     SPIClass spiSDCard;

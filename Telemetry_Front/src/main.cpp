@@ -387,8 +387,8 @@ void prepareADCMessage()
 void prepareGPSMessage()
 {
   // Lat and Long base for bacau
-  int32_t latInt = (int32_t)((sensorData.latitude - 47) * 1000000);
-  int32_t lonInt = (int32_t)((sensorData.longitude - 27) * 1000000);
+  int32_t latInt = (int32_t)((sensorData.latitude - 46) * 1000000);
+  int32_t lonInt = (int32_t)((sensorData.longitude - 26) * 1000000);
 
   canMessages[2].data[0] = (latInt >> 16) & 0xFF;
   canMessages[2].data[1] = (latInt >> 8) & 0xFF;

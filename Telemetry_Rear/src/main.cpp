@@ -2,7 +2,7 @@
 bool vb = false; // Set to 'false' to disable all Serial output
 
 #include <Arduino.h>
-#include "adcObj/adcObj.hpp"
+//#include "adcObj/adcObj.hpp"
 #include "driver/can.h"
 #include "aditional/aditional.hpp"
 #include <WiFi.h>
@@ -27,6 +27,7 @@ bool bspdActive = false;
 uint16_t damperRearLeftVoltage; // Use uint16_t for voltage in mV
 uint16_t damperRearRightVoltage;
 uint8_t currentGear; // Gear is typically 0-6
+uint8_t lastGear;
 uint16_t brakePressureVoltage;
 
 // CAN Configuration
@@ -188,6 +189,10 @@ void readSensorData()
     currentGear = 6;
   else
     currentGear = 0; // Neutral
+
+  if (lastGear == 3 && currentGear == 0)
+    currentGear = 2;
+  lastGear = currentGear;
 
   if (vb)
   {

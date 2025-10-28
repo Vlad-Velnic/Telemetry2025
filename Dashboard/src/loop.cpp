@@ -293,7 +293,7 @@ void Dashboard::processTempMessage(const twai_message_t &msg)
 void Dashboard::processVoltMessage(const twai_message_t &msg)
 {
     // Use new constant
-    float newVoltage = ((msg.data[2] << 8) | msg.data[4]) / Config::VOLT_SCALE_FACTOR;
+    float newVoltage = ((msg.data[2] << 8) | msg.data[3]) / Config::VOLT_SCALE_FACTOR;
     if (abs(newVoltage - currentBatteryVoltage) > 0.1)
     {
         currentBatteryVoltage = newVoltage;

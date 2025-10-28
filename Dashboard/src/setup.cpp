@@ -103,11 +103,11 @@ bool Dashboard::initializeDisplay()
 
     display.clearDisplay();
     display.setTextColor(SSD1306_WHITE);
-    display.setTextSize(2);
+    display.setTextSize(1);
     display.setCursor(2, 28);
     display.print("T.U.Iasi Racing 252");
     display.display();
-    delay(300); // Show booting message
+    delay(100); // Show booting message
 
     if (Config::DEBUG_SERIAL)
         Serial.println("Display initialized successfully");
@@ -129,7 +129,11 @@ bool Dashboard::syncNTP()
 {
     if (Config::DEBUG_SERIAL)
         Serial.println("WiFi connected. Syncing NTP...");
-    configTime(Config::GMT_OFFSET_SEC, Config::DAYLIGHT_OFFSET_SEC, Config::NTP_SERVER);
+    configTime(Config::GMT_OFFSET_SEC, Config::DAYLIGHT_OFFSET_SEC, 
+               Config::NTP_SERVER,
+               Config::NTP_SERVER_SECONDARY,
+               Config::NTP_SERVER_TERTIARY
+               );
 
     if (!getLocalTime(&timeinfo, 5000))
     { // 5 second timeout

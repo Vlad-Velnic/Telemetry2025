@@ -37,6 +37,8 @@ namespace Config
     // Network settings
     constexpr const char *MQTT_SERVER = "broker.hivemq.com";
     constexpr const char *NTP_SERVER = "pool.ntp.org";
+    constexpr const char *NTP_SERVER_SECONDARY = "time.google.com"; //
+    constexpr const char *NTP_SERVER_TERTIARY = "europe.pool.ntp.org"; //
     constexpr int32_t GMT_OFFSET_SEC = 7200; // România summer
     constexpr int32_t DAYLIGHT_OFFSET_SEC = 0;
     constexpr unsigned long WIFI_RETRY_INTERVAL = 10000; // 10 seconds

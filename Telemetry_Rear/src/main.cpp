@@ -187,12 +187,13 @@ void readSensorData()
     currentGear = 5;
   else if (gearInput_a6 == 0)
     currentGear = 6;
-  else
+  else if(currentGear!=2)
     currentGear = 0; // Neutral
 
   if (lastGear == 3 && currentGear == 0)
     currentGear = 2;
-  lastGear = currentGear;
+  if(currentGear!=0)
+    lastGear = currentGear;
 
   if (vb)
   {

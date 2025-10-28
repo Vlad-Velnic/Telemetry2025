@@ -89,8 +89,8 @@ namespace Config
     constexpr size_t SD_BUFFER_SIZE = 4096;
 
     // Debug flags
-    static constexpr bool DEBUG_SERIAL = true;
-    static constexpr bool DEBUG_CAN = true; // Verbose CAN message logging
+    static constexpr bool DEBUG_SERIAL = false;
+    static constexpr bool DEBUG_CAN = false; // Verbose CAN message logging
 }
 
 // CAN configuration (unchanged)

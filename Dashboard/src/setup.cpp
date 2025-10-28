@@ -107,7 +107,7 @@ bool Dashboard::initializeDisplay()
     display.setCursor(2, 28);
     display.print("T.U.Iasi Racing 252");
     display.display();
-    delay(100); // Show booting message
+    //delay(100); // Show booting message
 
     if (Config::DEBUG_SERIAL)
         Serial.println("Display initialized successfully");
@@ -117,7 +117,7 @@ bool Dashboard::initializeDisplay()
 void Dashboard::startWiFi()
 {
     WiFi.mode(WIFI_STA); // Set station mode
-    WiFi.begin("Vlad's iPhone 14","coscos27");        // Start connection, do not wait
+    WiFi.begin("252","xyztuxOV");        // Start connection, do not wait
     if (Config::DEBUG_SERIAL)
         Serial.println("Attempting WiFi connection...");
     syncNTP();

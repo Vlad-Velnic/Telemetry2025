@@ -16,6 +16,7 @@
 //#include <ArduinoOTA.h>
 #include <time.h>
 #include <Fonts/FreeSansBold18pt7b.h>
+#include <Preferences.h>
 
 // Configuration namespace to organize constants
 namespace Config
@@ -91,6 +92,9 @@ namespace Config
     // Debug flags
     static constexpr bool DEBUG_SERIAL = false;
     static constexpr bool DEBUG_CAN = false; // Verbose CAN message logging
+
+    constexpr const char *PREF_NAMESPACE = "dashboard";
+    constexpr const char *LOG_COUNT_KEY = "logCount";
 }
 
 // CAN configuration (unchanged)
@@ -174,6 +178,9 @@ public:
 
 private:
     void checkCANTimeouts();
+
+    Preferences preferences;
+    uint32_t logFileCounter = 0;
 
     // Hardware components
     //RTC_DS1307 rtc;

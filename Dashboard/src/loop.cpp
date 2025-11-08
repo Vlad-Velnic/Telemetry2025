@@ -282,7 +282,7 @@ void Dashboard::processGPSMessage(const twai_message_t &msg)
 void Dashboard::processTempMessage(const twai_message_t &msg)
 {
     // Use new constant
-    float newTemp = ((((msg.data[6] << 8) | msg.data[7]) - 32) / 1.8) / Config::TEMP_SCALE_FACTOR;
+    float newTemp = ((((msg.data[6] << 8) | msg.data[7]) - 32) / 1.8) / Config::TEMP_SCALE_FACTOR *5/9;
     if (abs(newTemp - currentTemp) > 0.5)
     {
         currentTemp = newTemp;
